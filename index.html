@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Chloe Out Loud</title>
+  <link href="https://fonts.googleapis.com/css2?family=Ephesis&family=Lora:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet"/>
+
+  <style>
+    :root {
+      --cream:    #FFF5EB;
+      --warm-gray:#847E72;
+      --sage:     #52554E;
+      --navy:     #2E4558;
+      --midnight: #0C2A3C;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      background-color: var(--cream);
+      color: var(--sage);
+      font-family: 'Lora', Georgia, serif;
+      font-size: 18px;
+      line-height: 1.8;
+      overflow-x: hidden;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 18px 60px;
+      background: rgba(255, 245, 235, 0.92);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(132, 126, 114, 0.2);
+      white-space: nowrap;
+    }
+
+    .nav-logo {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      text-decoration: none;
+      line-height: 1;
+      gap: 1px;
+    }
+
+    .nav-logo-main {
+      font-family: Georgia, 'Times New Roman', serif;
+      font-size: 1.45rem;
+      font-weight: 900;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      color: var(--midnight);
+    }
+
+    .nav-logo-sub {
+      font-family: 'Ephesis', cursive;
+      font-size: 1rem;
+      color: var(--warm-gray);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 24px;
+      list-style: none;
+      flex-shrink: 0;
+    }
+
+    .nav-links a {
+      font-family: 'Lora', serif;
+      font-size: 0.72rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--warm-gray);
+      text-decoration: none;
+      transition: color 0.25s;
+      white-space: nowrap;
+    }
+
+    .nav-links a:hover { color: var(--midnight); }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+      padding-top: 80px;
+    }
+
+    .hero-text {
+      padding: 80px 64px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .hero-eyebrow {
+      font-family: 'Ephesis', cursive;
+      font-size: 1.8rem;
+      color: var(--warm-gray);
+      margin-bottom: 10px;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeUp 0.8s 0.2s forwards;
+    }
+
+    .hero-title {
+      font-family: Georgia, 'Times New Roman', serif;
+      font-size: clamp(3rem, 4.5vw, 5rem);
+      font-weight: 900;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      color: var(--midnight);
+      line-height: 1.04;
+      margin-bottom: 22px;
+      opacity: 0;
+      transform: translateY(24px);
+      animation: fadeUp 0.9s 0.35s forwards;
+    }
+
+    .hero-divider {
+      width: 48px;
+      height: 2px;
+      background: var(--warm-gray);
+      margin-bottom: 22px;
+      opacity: 0;
+      animation: fadeUp 0.8s 0.46s forwards;
+    }
+
+    .hero-desc {
+      font-size: 1rem;
+      color: var(--sage);
+      max-width: 400px;
+      margin-bottom: 36px;
+      line-height: 1.85;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeUp 0.9s 0.56s forwards;
+    }
+
+    .hero-cta {
+      display: inline-block;
+      padding: 13px 34px;
+      background: var(--midnight);
+      color: var(--cream);
+      font-family: 'Lora', serif;
+      font-size: 0.76rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      text-decoration: none;
+      transition: background 0.3s, transform 0.2s;
+      opacity: 0;
+      animation: fadeUp 0.9s 0.68s forwards;
+      align-self: flex-start;
+    }
+
+    .hero-cta:hover { background: var(--navy); transform: translateY(-2px); }
+
+    .hero-image-wrap {
+      position: relative;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    .hero-image-wrap::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to right, rgba(255,245,235,0.12) 0%, transparent 35%);
+    }
+
+    .hero-image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: saturate(0.82) sepia(0.1);
+      transform: scale(1.04);
+      animation: zoomOut 9s ease forwards;
+    }
+
+    .hero-script-overlay {
+      position: absolute;
+      bottom: 44px;
+      left: 36px;
+      z-index: 2;
+      font-family: 'Ephesis', cursive;
+      font-size: 1.35rem;
+      color: rgba(255,245,235,0.72);
+      text-shadow: 0 1px 10px rgba(12,42,60,0.5);
+    }
+
+    /* ── ABOUT STRIP ── */
+    .about-strip {
+      background: var(--midnight);
+      color: var(--cream);
+      padding: 90px 60px;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+
+    .about-label {
+      font-family: 'Ephesis', cursive;
+      font-size: 3rem;
+      color: rgba(255,245,235,0.65);
+      margin-bottom: -8px;
+    }
+
+    .about-content {
+      position: relative;
+      z-index: 1;
+      max-width: 640px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .about-title {
+      font-family: Georgia, 'Times New Roman', serif;
+      font-size: 7rem;
+      font-weight: 900;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: var(--cream);
+      margin-bottom: 20px;
+      line-height: 1;
+    }
+
+    .about-heading {
+      font-family: Georgia, 'Times New Roman', serif;
+      font-size: 1.9rem;
+      font-weight: 600;
+      margin-bottom: 16px;
+      line-height: 1.25;
+      color: var(--cream);
+      position: relative;
+      z-index: 1;
+    }
+
+    .about-heading em { font-style: italic; color: rgba(255,245,235,0.75); }
+
+    .about-body {
+      font-size: 0.98rem;
+      color: rgba(255,245,235,0.85);
+      line-height: 1.9;
+      max-width: 580px;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* ── LATEST POSTS ── */
+    .latest {
+      padding: 7px 60px 90px;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .section-eyebrow {
+      font-family: 'Ephesis', cursive;
+      font-size: 3rem;
+      color: var(--warm-gray);
+      margin-bottom: -8px;
+    }
+
+    .section-heading {
+      font-family: Georgia, 'Times New Roman', serif;
+      font-size: 2.3rem;
+      font-weight: 900;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: var(--midnight);
+      margin-bottom: 52px;
+    }
+
+    .post-list { display: flex; flex-direction: column; }
+
+    .post-item {
+      display: grid;
+      grid-template-columns: 64px 1fr;
+      gap: 28px;
+      align-items: start;
+      padding: 36px 0;
+      border-bottom: 1px solid rgba(132,126,114,0.22);
+      transition: opacity 0.2s;
+      cursor: pointer;
+    }
+
+    .post-item:first-child { border-top: 1px solid rgba(132,126,114,0.22); }
+    .post-item:hover { opacity: 0.7; }
+
+    .post-number {
+      font-family: Georgia, 'Times New Roman', serif;
+      font-size: 2.6rem;
+      font-weight: 900;
+      color: rgba(132,126,114,0.2);
+      line-height: 1;
+      padding-top: 6px;
+    }
+
+    .post-meta {
+      font-size: 0.72rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--warm-gray);
+      margin-bottom: 7px;
+    }
+
+    .post-title {
+      font-family: Georgia, 'Times New Roman', serif;
+      font-size: 1.42rem;
+      font-weight: 600;
+      color: var(--midnight);
+      line-height: 1.3;
+      margin-bottom: 10px;
+    }
+
+    .post-excerpt {
+      font-size: 0.94rem;
+      color: var(--warm-gray);
+      line-height: 1.75;
+    }
+
+    .post-read {
+      display: inline-block;
+      margin-top: 14px;
+      font-size: 0.74rem;
+      letter-spacing: 0.13em;
+      text-transform: uppercase;
+      color: var(--navy);
+      text-decoration: none;
+      border-bottom: 1px solid currentColor;
+      padding-bottom: 2px;
+      transition: color 0.2s;
+    }
+
+    .post-read:hover { color: var(--midnight); }
+
+    /* ── NEWSLETTER ── */
+    .newsletter {
+      background: var(--sage);
+      color: var(--cream);
+      padding: 100px 60px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .newsletter::before {
+      content: '';
+      position: absolute;
+      top: -80px; left: 50%;
+      transform: translateX(-50%);
+      width: 700px; height: 700px;
+      background: radial-gradient(circle, rgba(12,42,60,0.3) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .newsletter-eyebrow {
+      font-family: 'Ephesis', cursive;
+      font-size: 1.8rem;
+      color: rgba(255,245,235,0.45);
+      margin-bottom: 10px;
+    }
+
+    .newsletter-title {
+      font-family: Georgia, 'Times New Roman', serif;
+      font-size: clamp(2rem, 3.5vw, 3.2rem);
+      font-weight: 900;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      line-height: 1.1;
+      margin-bottom: 16px;
+    }
+
+    .newsletter-sub {
+      font-size: 0.98rem;
+      color: rgba(255,245,235,0.58);
+      margin-bottom: 44px;
+      max-width: 380px;
+      margin-left: auto;
+      margin-right: auto;
+      line-height: 1.8;
+    }
+
+    .newsletter-form {
+      display: flex;
+      justify-content: center;
+      max-width: 460px;
+      margin: 0 auto;
+    }
+
+    .newsletter-input {
+      flex: 1;
+      padding: 15px 22px;
+      background: rgba(255,245,235,0.1);
+      border: 1px solid rgba(255,245,235,0.22);
+      border-right: none;
+      color: var(--cream);
+      font-family: 'Lora', serif;
+      font-size: 0.94rem;
+      outline: none;
+      transition: border-color 0.25s, background 0.25s;
+    }
+
+    .newsletter-input::placeholder { color: rgba(255,245,235,0.3); }
+    .newsletter-input:focus {
+      border-color: rgba(255,245,235,0.48);
+      background: rgba(255,245,235,0.14);
+    }
+
+    .newsletter-btn {
+      padding: 15px 28px;
+      background: var(--midnight);
+      color: var(--cream);
+      border: none;
+      font-family: 'Lora', serif;
+      font-size: 0.74rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: background 0.25s;
+      white-space: nowrap;
+    }
+
+    .newsletter-btn:hover { background: var(--navy); }
+
+    .newsletter-note {
+      margin-top: 18px;
+      font-size: 0.74rem;
+      color: rgba(255,245,235,0.28);
+      letter-spacing: 0.05em;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--midnight);
+      border-top: 1px solid rgba(255,245,235,0.05);
+      padding: 30px 60px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .footer-logo {
+      font-family: Georgia, 'Times New Roman', serif;
+      font-size: 0.9rem;
+      font-weight: 900;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgba(255,245,235,0.3);
+      text-decoration: none;
+    }
+
+    .footer-script {
+      font-family: 'Ephesis', cursive;
+      font-size: 1rem;
+      color: rgba(255,245,235,0.18);
+    }
+
+    .footer-copy {
+      font-size: 0.7rem;
+      color: rgba(255,245,235,0.2);
+      letter-spacing: 0.08em;
+    }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes zoomOut {
+      to { transform: scale(1); }
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      nav { padding: 14px 22px; }
+
+      .hero { grid-template-columns: 1fr; }
+      .hero-image-wrap { height: 55vw; order: -1; }
+      .hero-text { padding: 44px 24px; }
+
+      .about-strip { grid-template-columns: 1fr; gap: 16px; padding: 52px 24px; }
+      .about-label { font-size: 2.5rem; }
+
+      .latest { padding: 60px 24px; }
+
+      .newsletter { padding: 70px 24px; }
+      .newsletter-form { flex-direction: column; }
+      .newsletter-input { border-right: 1px solid rgba(255,245,235,0.22); border-bottom: none; }
+
+      footer { flex-direction: column; gap: 10px; text-align: center; padding: 24px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a href="#" class="nav-logo">
+      <span class="nav-logo-main">Chloe Out Loud</span>
+      <span class="nav-logo-sub">a lifestyle blog</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="#">Fresh Ink</a></li>
+      <li><a href="#">Meet Chloe</a></li>
+      <li><a href="#">Behind the Scenes</a></li>
+
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-text">
+      <span class="hero-eyebrow">welcome to my world</span>
+      <h1 class="hero-title">Chloe<br/>Out<br/>Loud</h1>
+      <div class="hero-divider"></div>
+      <p class="hero-desc">Hi, I'm Chloe — a 21-year-old BYU marketing student from Arizona. This is my corner of the internet: honest, loud, and entirely me.</p>
+      <a href="#" class="hero-cta">Start reading</a>
+    </div>
+    <div class="hero-image-wrap">
+      <!-- Replace this src with your own photo -->
+      <img
+        class="hero-image"
+        src="https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?w=900&q=80&auto=format&fit=crop"
+        alt="Chloe hero"
+      />
+      <span class="hero-script-overlay">living out loud, always</span>
+    </div>
+  </section>
+
+  <!-- ABOUT STRIP -->
+  <section class="about-strip">
+    <div class="about-label">a little about me</div>
+    <div class="about-content">
+      <h2 class="about-title">Chloe</h2>
+      <h2 class="about-heading">Junior. Twin. <em>A lot to handle.</em></h2>
+      <p class="about-body">I'm in the marketing program at BYU and passionate about building brands and strategy. I'm also a member of The Church of Jesus Christ of Latter-day Saints — my beliefs shape everything I write. I'm not here for debate, just real, honest conversation. Pull up a chair.</p>
+    </div>
+  </section>
+
+  <!-- LATEST POSTS -->
+  <section class="latest">
+    <div class="section-eyebrow">just in..</div>
+    <h2 class="section-heading">Latest Stories</h2>
+    <div class="post-list">
+
+      <div class="post-item">
+        <div class="post-number">01</div>
+        <div>
+          <div class="post-meta">Feb 14, 2026 &nbsp;·&nbsp; 5 min read</div>
+          <div class="post-title">What Being a Twin Taught Me About Identity</div>
+          <p class="post-excerpt">People assume twins are the same person split in two. Growing up, I was determined to figure out who Chloe was — separate, whole, and entirely her own.</p>
+          <a href="#" class="post-read">Read more</a>
+        </div>
+      </div>
+
+      <div class="post-item">
+        <div class="post-number">02</div>
+        <div>
+          <div class="post-meta">Jan 30, 2026 &nbsp;·&nbsp; 7 min read</div>
+          <div class="post-title">Marketing School Changed How I See Every Brand I Love</div>
+          <p class="post-excerpt">Once you study brand strategy, you can never just be a consumer again. Here's what I've learned — and what I now can't unsee at the grocery store.</p>
+          <a href="#" class="post-read">Read more</a>
+        </div>
+      </div>
+
+      <div class="post-item">
+        <div class="post-number">03</div>
+        <div>
+          <div class="post-meta">Jan 18, 2026 &nbsp;·&nbsp; 6 min read</div>
+          <div class="post-title">Moving from Arizona to Utah: A Hot Girl's Cold Reality</div>
+          <p class="post-excerpt">Three years in Provo and I still haven't fully accepted that winter is real. A love letter to my home state and a grudging peace treaty with the snow.</p>
+          <a href="#" class="post-read">Read more</a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- NEWSLETTER -->
+  <section class="newsletter">
+    <div class="newsletter-eyebrow">let's keep in touch</div>
+    <h2 class="newsletter-title">Out Loud,<br/>In Your Inbox</h2>
+    <p class="newsletter-sub">Real stories, honest thoughts, and the occasional life update — every other week.</p>
+    <form class="newsletter-form" onsubmit="return false;">
+      <input class="newsletter-input" type="email" placeholder="your@email.com" />
+      <button class="newsletter-btn">Subscribe</button>
+    </form>
+    <p class="newsletter-note">No spam ever. Unsubscribe anytime.</p>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <a href="#" class="footer-logo">Chloe Out Loud</a>
+    <span class="footer-script">always honest, always loud</span>
+    <span class="footer-copy">© 2026 Chloe Rudd</span>
+  </footer>
+
+</body>
+</html>
