@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Behind the Scenes — Chloe Out Loud</title>
+  <link href="https://fonts.googleapis.com/css2?family=Ephesis&family=Lora:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet"/>
+
+  <style>
+    :root {
+      --cream:    #FFF5EB;
+      --warm-gray:#847E72;
+      --sage:     #52554E;
+      --navy:     #2E4558;
+      --midnight: #0C2A3C;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { background: var(--cream); color: var(--sage); font-family: 'Lora', Georgia, serif; font-size: 18px; line-height: 1.8; overflow-x: hidden; }
+
+    /* ── NAV ── */
+    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 18px 60px; background: rgba(255,245,235,0.92); backdrop-filter: blur(10px); border-bottom: 1px solid rgba(132,126,114,0.2); white-space: nowrap; }
+    .nav-logo { display: flex; flex-direction: column; align-items: flex-start; text-decoration: none; line-height: 1; gap: 1px; }
+    .nav-logo-main { font-family: Georgia, serif; font-size: 1.45rem; font-weight: 900; letter-spacing: 0.07em; text-transform: uppercase; color: var(--midnight); }
+    .nav-logo-sub { font-family: 'Ephesis', cursive; font-size: 1rem; color: var(--warm-gray); }
+    .nav-links { display: flex; gap: 24px; list-style: none; flex-shrink: 0; }
+    .nav-links a { font-family: 'Lora', serif; font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--warm-gray); text-decoration: none; transition: color 0.25s; }
+    .nav-links a:hover, .nav-links a.active { color: var(--midnight); }
+
+    /* ── PAGE HERO ── */
+    .page-hero {
+      background: var(--midnight);
+      padding: 140px 60px 80px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .page-hero::before { content: ''; position: absolute; top: -80px; left: 50%; transform: translateX(-50%); width: 800px; height: 500px; background: radial-gradient(ellipse, rgba(46,69,88,0.55) 0%, transparent 70%); pointer-events: none; }
+    .page-hero-inner { position: relative; z-index: 1; }
+    .page-hero-eyebrow { font-family: 'Ephesis', cursive; font-size: 2.2rem; color: rgba(255,245,235,0.45); margin-bottom: -8px; opacity: 0; transform: translateY(16px); animation: fadeUp 0.7s 0.1s forwards; }
+    .page-hero-title { font-family: Georgia, serif; font-size: clamp(4rem, 7vw, 8rem); font-weight: 900; letter-spacing: 0.07em; text-transform: uppercase; color: var(--cream); line-height: 1; margin-bottom: 20px; opacity: 0; transform: translateY(20px); animation: fadeUp 0.8s 0.25s forwards; }
+    .page-hero-sub { font-family: Georgia, serif; font-style: italic; font-size: 1rem; color: rgba(255,245,235,0.45); opacity: 0; animation: fadeUp 0.8s 0.4s forwards; }
+
+    /* ── MOMENTS FEED ── */
+    .moments { padding: 100px 0 120px; }
+
+    .moment {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      min-height: 520px;
+      overflow: hidden;
+    }
+
+    /* Alternating: odd = image left, even = image right */
+    .moment:nth-child(even) .moment-image { order: 2; }
+    .moment:nth-child(even) .moment-text  { order: 1; }
+
+    .moment-image {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .moment-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: saturate(0.82) sepia(0.08);
+      display: block;
+      transition: transform 0.6s ease, filter 0.4s ease;
+    }
+
+    .moment:hover .moment-image img {
+      transform: scale(1.03);
+      filter: saturate(0.95) sepia(0.04);
+    }
+
+    .moment-image-caption {
+      position: absolute;
+      bottom: 20px;
+      left: 24px;
+      font-family: 'Ephesis', cursive;
+      font-size: 1.2rem;
+      color: rgba(255,245,235,0.7);
+      text-shadow: 0 1px 8px rgba(12,42,60,0.5);
+    }
+
+    .moment-text {
+      padding: 64px 72px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      background: var(--cream);
+    }
+
+    /* Alternate background for even rows */
+    .moment:nth-child(even) .moment-text { background: white; }
+    .moment:nth-child(3) .moment-text { background: var(--midnight); color: var(--cream); }
+    .moment:nth-child(3)
+    .moment:nth-child(3) .moment-label { color: rgba(255,245,235,0.45); }
+    .moment:nth-child(3) .moment-heading { color: var(--cream); }
+    .moment:nth-child(3) .moment-body { color: rgba(255,245,235,0.75); }
+
+    .moment-label {
+      font-family: 'Ephesis', cursive;
+      font-size: 1.6rem;
+      color: var(--warm-gray);
+      margin-bottom: 4px;
+    }
+
+    .moment-heading {
+      font-family: Georgia, serif;
+      font-size: 1.7rem;
+      font-weight: 900;
+      color: var(--midnight);
+      line-height: 1.2;
+      margin-bottom: 20px;
+      letter-spacing: 0.01em;
+    }
+
+    .moment-body {
+      font-size: 0.98rem;
+      color: var(--sage);
+      line-height: 1.9;
+    }
+
+    /* ── JOURNAL INTRO ── */
+    .journal-intro {
+      background: var(--navy);
+      padding: 40px 60px;
+    }
+    .journal-intro-inner {
+      max-width: 720px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+      text-align: center;
+    }
+    .journal-intro-icon {
+      font-size: 1.4rem;
+      color: rgba(255,245,235,0.35);
+      flex-shrink: 0;
+    }
+    .journal-intro p {
+      font-family: 'Lora', serif;
+      font-style: italic;
+      font-size: 1.25rem;
+      color: rgba(255,245,235,0.78);
+      line-height: 1.85;
+      text-align: center;
+    }
+    .moment-date {
+      font-family: 'Lora', serif;
+      font-size: 0.68rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--warm-gray);
+      margin-bottom: 4px;
+    }
+    .moment:nth-child(3) .moment-date { color: rgba(255,245,235,0.35); }
+
+        /* ── FOOTER ── */
+    footer { background: var(--midnight); border-top: 1px solid rgba(255,245,235,0.05); padding: 30px 60px; display: flex; align-items: center; justify-content: space-between; }
+    .footer-logo { font-family: Georgia, serif; font-size: 0.9rem; font-weight: 900; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,245,235,0.3); text-decoration: none; }
+    .footer-script { font-family: 'Ephesis', cursive; font-size: 1rem; color: rgba(255,245,235,0.18); }
+    .footer-copy { font-size: 0.7rem; color: rgba(255,245,235,0.2); letter-spacing: 0.08em; }
+
+    @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
+
+    @media (max-width: 900px) {
+      nav { padding: 14px 22px; }
+      .page-hero { padding: 120px 24px 60px; }
+      .moment { grid-template-columns: 1fr; min-height: auto; }
+      .moment:nth-child(even) .moment-image { order: 0; }
+      .moment:nth-child(even) .moment-text  { order: 0; }
+      .moment-image { height: 60vw; }
+      .moment-text { padding: 48px 28px; }
+      footer { flex-direction: column; gap: 10px; text-align: center; padding: 24px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a href="blog.html" class="nav-logo">
+      <span class="nav-logo-main">Chloe Out Loud</span>
+      <span class="nav-logo-sub">a lifestyle blog</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="fresh-ink.html">Fresh Ink</a></li>
+      <li><a href="meet-chloe.html">Meet Chloe</a></li>
+      <li><a href="behind-the-scenes.html" class="active">Behind the Scenes</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section class="page-hero">
+    <div class="page-hero-inner">
+      <div class="page-hero-eyebrow">the real, unedited version</div>
+      <h1 class="page-hero-title">Behind<br/>the Scenes</h1>
+      <p class="page-hero-sub">Life between the blog posts — no filter, no highlight reel.</p>
+    </div>
+  </section>
+
+
+  <!-- JOURNAL INTRO -->
+  <div class="journal-intro">
+    <div class="journal-intro-inner">
+      <span class="journal-intro-icon">✦</span>
+      <p>I am a big believer that our experiences shape our beliefs, so here are my latest experiences to give you some perspective on what is currently shaping my opinions.</p>
+    </div>
+  </div>
+
+  <!-- MOMENTS -->
+  <section class="moments">
+
+    <!-- 5: image left, text right -->
+    <div class="moment">
+      <div class="moment-image">
+        <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=900&q=80&auto=format&fit=crop" alt="Arizona vs Utah"/>
+        <span class="moment-image-caption">somewhere between two states</span>
+      </div>
+      <div class="moment-text">
+        <div class="moment-date">October 22, 2025</div>
+        <div class="moment-label">where I'm from vs. where I am</div>
+        <h2 class="moment-heading">Still Figuring Out Which State I Belong To</h2>
+        <p class="moment-body">Arizona is home. Utah has become something too. I go back to Arizona for breaks and the warmth feels like a reward. I come back to Provo and the mountains remind me why I stayed. I don't think I have to choose, and writing this blog has made me realize I don't want to. I'm from Arizona and I live in Utah and both of those things are true and they're both in everything I write, whether I intend it or not.</p>
+      </div>
+    </div>
+
+    <!-- 4: text left, image right -->
+    <div class="moment">
+      <div class="moment-image">
+        <img src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=900&q=80&auto=format&fit=crop" alt="Twin life"/>
+        <span class="moment-image-caption">built-in best friend</span>
+      </div>
+      <div class="moment-text">
+        <div class="moment-date">November 10, 2025</div>
+        <div class="moment-label">the supporting cast</div>
+        <h2 class="moment-heading">The People Behind the Blog</h2>
+        <p class="moment-body">My twin is my first reader. Not always by choice — sometimes I just send her a draft at 11pm and say "is this good or unhinged" and she responds honestly, which I appreciate. My friends have learned to expect occasional questions like "does this sentence sound too aggressive" at random hours. They have not complained, at least not to my face, which I choose to interpret as support.</p>
+      </div>
+    </div>
+
+    <!-- 3: image left, text right — dark -->
+    <div class="moment">
+      <div class="moment-image">
+        <img src="https://images.unsplash.com/photo-1455390582262-044cdead277a?w=900&q=80&auto=format&fit=crop" alt="Writing process"/>
+        <span class="moment-image-caption">first drafts are always rough</span>
+      </div>
+      <div class="moment-text">
+        <div class="moment-date">November 30, 2025</div>
+        <div class="moment-label">the process</div>
+        <h2 class="moment-heading">How a Post Actually Gets Made</h2>
+        <p class="moment-body">It starts with a thought I can't stop having. I'll be in class or on a walk and something will occur to me and I'll type a note on my phone that makes zero sense to anyone but me. Then I open Google Docs — yes, I know, I wrote a whole post about this — and I just start writing. No outline, no plan. I write until it feels like something, then I go back and make it make sense. It's not a system I'd recommend, but it's mine.</p>
+      </div>
+    </div>
+
+    <!-- 2: text left, image right -->
+    <div class="moment">
+      <div class="moment-image">
+        <img src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=900&q=80&auto=format&fit=crop" alt="BYU campus life"/>
+        <span class="moment-image-caption">provo, utah</span>
+      </div>
+      <div class="moment-text">
+        <div class="moment-date">December 14, 2025</div>
+        <div class="moment-label">the daily backdrop</div>
+        <h2 class="moment-heading">Campus Life as a Junior</h2>
+        <p class="moment-body">BYU is a strange and wonderful place. I say that with full affection. There is something about being surrounded by thousands of people who are all genuinely trying to figure out who they are and what they believe that makes for a pretty interesting atmosphere to write in. The marketing building is where I spend most of my time. The library is where I go when I need to feel productive. The Creamery is where I go when I need to feel better.</p>
+      </div>
+    </div>
+
+    <!-- 1: image left, text right -->
+    <div class="moment">
+      <div class="moment-image">
+        <!-- Replace with your own photo -->
+        <img src="https://images.unsplash.com/photo-1501854140801-50d01698950b?w=900&q=80&auto=format&fit=crop" alt="Where the writing happens"/>
+        <span class="moment-image-caption">the usual workspace</span>
+      </div>
+      <div class="moment-text">
+        <div class="moment-date">January 8, 2026</div>
+        <div class="moment-label">where it all starts</div>
+        <h2 class="moment-heading">Where the Writing Actually Happens</h2>
+        <p class="moment-body">Despite what you might picture, I do not write at a clean, aesthetic desk with soft lighting and a latte. I write at my kitchen table, usually in the two-hour window between my last class and when I have to make dinner, with whatever is left of my coffee from that morning. It's not glamorous. It's effective. The blog gets written, the coffee gets finished, and I call that a win.</p>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <a href="blog.html" class="footer-logo">Chloe Out Loud</a>
+    <span class="footer-script">always honest, always loud</span>
+    <span class="footer-copy">© 2026 Chloe Rudd</span>
+  </footer>
+
+</body>
+</html>

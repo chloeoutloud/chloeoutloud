@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Why I Refuse to Post My Opinions on LinkedIn — Chloe Out Loud</title>
+  <link href="https://fonts.googleapis.com/css2?family=Ephesis&family=Lora:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet"/>
+  <style>
+    :root { --cream: #FFF5EB; --warm-gray: #847E72; --sage: #52554E; --navy: #2E4558; --midnight: #0C2A3C; }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: var(--cream); color: var(--sage); font-family: 'Lora', Georgia, serif; font-size: 18px; line-height: 1.8; overflow-x: hidden; }
+    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 18px 60px; background: rgba(255,245,235,0.92); backdrop-filter: blur(10px); border-bottom: 1px solid rgba(132,126,114,0.2); white-space: nowrap; }
+    .nav-logo { display: flex; flex-direction: column; align-items: flex-start; text-decoration: none; line-height: 1; gap: 1px; }
+    .nav-logo-main { font-family: Georgia, serif; font-size: 1.45rem; font-weight: 900; letter-spacing: 0.07em; text-transform: uppercase; color: var(--midnight); }
+    .nav-logo-sub { font-family: 'Ephesis', cursive; font-size: 1rem; color: var(--warm-gray); }
+    .nav-links { display: flex; gap: 24px; list-style: none; flex-shrink: 0; }
+    .nav-links a { font-family: 'Lora', serif; font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--warm-gray); text-decoration: none; transition: color 0.25s; }
+    .nav-links a:hover, .nav-links a.active { color: var(--midnight); }
+    .article-hero { background: var(--midnight); color: var(--cream); padding: 140px 60px 80px; text-align: center; position: relative; overflow: hidden; }
+    .article-hero::before { content: ''; position: absolute; top: -80px; left: 50%; transform: translateX(-50%); width: 800px; height: 600px; background: radial-gradient(ellipse, rgba(46,69,88,0.55) 0%, transparent 70%); pointer-events: none; }
+    .hero-inner { position: relative; z-index: 1; max-width: 780px; margin: 0 auto; }
+    .article-category { display: inline-block; font-family: 'Lora', serif; font-size: 0.65rem; letter-spacing: 0.16em; text-transform: uppercase; padding: 5px 16px; border: 1px solid rgba(255,245,235,0.25); color: rgba(255,245,235,0.6); margin-bottom: 24px; }
+    .article-title { font-family: Georgia, serif; font-size: clamp(2.2rem, 4.5vw, 4rem); font-weight: 900; line-height: 1.1; color: var(--cream); margin-bottom: 20px; }
+    .article-subtitle { font-family: Georgia, serif; font-style: italic; font-size: 1.1rem; color: rgba(255,245,235,0.55); margin-bottom: 32px; }
+    .article-meta { font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,245,235,0.35); }
+    .article-meta span { margin: 0 10px; }
+    .hero-image-wrap { width: 100%; max-height: 480px; overflow: hidden; }
+    .hero-image-wrap img { width: 100%; height: 480px; object-fit: cover; filter: saturate(0.75) sepia(0.12); display: block; }
+    .article-body { max-width: 700px; margin: 0 auto; padding: 72px 60px 80px; }
+    .article-body p { font-size: 1.05rem; color: var(--sage); line-height: 1.95; margin-bottom: 28px; }
+    .article-body h2 { font-family: Georgia, serif; font-size: 1.6rem; font-weight: 700; color: var(--midnight); margin: 48px 0 16px; }
+    .article-body blockquote { border-left: 3px solid var(--warm-gray); padding: 4px 0 4px 28px; margin: 40px 0; font-style: italic; font-size: 1.1rem; color: var(--navy); line-height: 1.7; }
+    .drop-cap::first-letter { font-family: Georgia, serif; font-size: 4.2rem; font-weight: 900; float: left; line-height: 0.82; margin: 6px 12px 0 0; color: var(--midnight); }
+    .article-bottom { background: var(--midnight); padding: 72px 60px; }
+    .bottom-inner { max-width: 700px; margin: 0 auto; }
+    .back-btn { display: inline-flex; align-items: center; gap: 8px; font-family: 'Lora', serif; font-size: 0.75rem; letter-spacing: 0.13em; text-transform: uppercase; color: rgba(255,245,235,0.55); text-decoration: none; border-bottom: 1px solid rgba(255,245,235,0.2); padding-bottom: 2px; transition: color 0.2s; margin-bottom: 56px; }
+    .back-btn:hover { color: var(--cream); }
+    .comment-eyebrow { font-family: 'Ephesis', cursive; font-size: 2rem; color: rgba(255,245,235,0.4); margin-bottom: -4px; }
+    .comment-title { font-family: Georgia, serif; font-size: 1.8rem; font-weight: 900; text-transform: uppercase; letter-spacing: 0.05em; color: var(--cream); margin-bottom: 32px; }
+    .comment-form { display: flex; flex-direction: column; gap: 16px; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .form-input, .form-textarea { font-family: 'Lora', serif; font-size: 0.92rem; padding: 14px 18px; background: rgba(255,245,235,0.07); border: 1px solid rgba(255,245,235,0.15); color: var(--cream); outline: none; transition: border-color 0.25s; resize: none; }
+    .form-input::placeholder, .form-textarea::placeholder { color: rgba(255,245,235,0.25); }
+    .form-input:focus, .form-textarea:focus { border-color: rgba(255,245,235,0.4); background: rgba(255,245,235,0.11); }
+    .form-textarea { min-height: 140px; }
+    .form-submit { align-self: flex-start; padding: 13px 34px; background: var(--cream); color: var(--midnight); border: none; font-family: 'Lora', serif; font-size: 0.75rem; letter-spacing: 0.15em; text-transform: uppercase; cursor: pointer; transition: background 0.25s, color 0.25s; }
+    .form-submit:hover { background: var(--warm-gray); color: var(--cream); }
+    footer { background: var(--midnight); border-top: 1px solid rgba(255,245,235,0.06); padding: 30px 60px; display: flex; align-items: center; justify-content: space-between; }
+    .footer-logo { font-family: Georgia, serif; font-size: 0.9rem; font-weight: 900; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,245,235,0.3); text-decoration: none; }
+    .footer-script { font-family: 'Ephesis', cursive; font-size: 1rem; color: rgba(255,245,235,0.18); }
+    .footer-copy { font-size: 0.7rem; color: rgba(255,245,235,0.2); letter-spacing: 0.08em; }
+    @media (max-width: 900px) { nav { padding: 14px 22px; } .article-hero { padding: 120px 24px 60px; } .article-body { padding: 48px 24px 60px; } .article-bottom { padding: 52px 24px; } .form-row { grid-template-columns: 1fr; } footer { flex-direction: column; gap: 10px; text-align: center; padding: 24px; } }
+  </style>
+</head>
+<body>
+  <nav>
+    <a href="blog.html" class="nav-logo"><span class="nav-logo-main">Chloe Out Loud</span><span class="nav-logo-sub">a lifestyle blog</span></a>
+    <ul class="nav-links">
+      <li><a href="fresh-ink.html" class="active">Fresh Ink</a></li>
+      <li><a href="meet-chloe.html">Meet Chloe</a></li>
+      <li><a href="#">Behind the Scenes</a></li>
+    </ul>
+  </nav>
+
+  <section class="article-hero">
+    <div class="hero-inner">
+      <span class="article-category">Opinion</span>
+      <h1 class="article-title">Why I Refuse to Post My Opinions on LinkedIn</h1>
+      <p class="article-subtitle">A blog is not outdated. It's just the respectful option.</p>
+      <div class="article-meta"><span>Chloe Rudd</span>·<span>Jan 18, 2026</span>·<span>5 min read</span></div>
+    </div>
+  </section>
+  <div class="hero-image-wrap"><img src="https://images.unsplash.com/photo-1499750310107-5fef28a66643?w=1400&q=80&auto=format&fit=crop" alt="Opinion"/></div>
+
+  <article class="article-body">
+    <p class="drop-cap">People always have something to say when they find out I started a blog. The response is almost always some version of: "A blog? Like, an actual blog? Is that not kind of... old?" And every time, I say yes. Yes, it's a blog. Yes, it's on the internet. Yes, I'm choosing this intentionally. And then I explain why, and they usually come around.</p>
+    <p>The original idea came from a job posting. I was applying for summer internships and one of them suggested including a link to a blog or portfolio. I didn't have one. But the seed was planted. I enjoy writing and I have a lot of opinions. That combination is basically the entire requirement for a blog. So here we are.</p>
+
+    <h2>LinkedIn Was the First Alternative I Considered (And Immediately Rejected)</h2>
+    <p>I try to live by the golden rule: do unto others as you would have done unto you. And if someone was flooding my LinkedIn feed with their personal hot takes and life reflections, I would be removing that connection so fast. No hesitation. No regret. Gone.</p>
+
+    <blockquote>"There's a very specific kind of cringe reserved for the person who uses LinkedIn as a personal diary. I will not be her. I refuse to be her."</blockquote>
+
+    <p>LinkedIn is for professional content. Occasionally inspirational. Occasionally a humble brag disguised as a life lesson. But it is not the place for my thoughts on rest culture or why I think cereal brand strategy is fascinating. My connections did not sign up for that, and I respect them too much to subject them to it.</p>
+
+    <h2>The Other Social Media Options Didn't Work Either</h2>
+    <p>Instagram requires a photo. I don't always have a photo. I'm not going to post a blurry mirror selfie just to accompany a 400-word essay about identity. That feels dishonest to the format. TikTok requires me to talk to a camera, and while I have many opinions, I am not yet at a stage in my life where I want to say them directly into a lens for strangers to comment on. That's a different level of vulnerability I'm not ready for.</p>
+    <p>The blog felt right because it's opt-in. You have to actually come here. You have to choose to read this. Nobody is getting my thoughts shoved into their algorithm without consent. If you're here, you want to be here. And that changes everything about how I write.</p>
+
+    <h2>Why "Outdated" Is Actually the Point</h2>
+    <p>Here's my hot take: blogs are not outdated, they're just slower. And slow is fine. Not everything needs to be a fifteen-second video or an optimized carousel post. Some things deserve to be read at your own pace, with your own coffee, on your own time. The format forces me to think in full sentences, build an actual argument, and commit to a point of view — all things I think are underrated in 2026.</p>
+    <p>If you have other suggestions for where I should post my opinions, I genuinely welcome them. Send them to me on LinkedIn. Because I'm not posting my email publicly — I already get enough spam as is.</p>
+  </article>
+
+  <section class="article-bottom">
+    <div class="bottom-inner">
+      <a href="fresh-ink.html" class="back-btn">← Back to Fresh Ink</a>
+      <div class="comment-eyebrow">share your thoughts</div>
+      <h2 class="comment-title">Leave a Comment</h2>
+      <form class="comment-form" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+        <div class="form-row">
+          <input class="form-input" type="text" placeholder="Your name"/>
+          <input class="form-input" type="email" name="email" placeholder="Your email (not published)"/>
+        </div>
+        <textarea class="form-textarea" name="message" placeholder="What are your thoughts?"></textarea>
+        <button class="form-submit" type="submit">Post Comment</button>
+      </form>
+    </div>
+  </section>
+
+  <footer>
+    <a href="blog.html" class="footer-logo">Chloe Out Loud</a>
+    <span class="footer-script">always honest, always loud</span>
+    <span class="footer-copy">© 2026 Chloe Rudd</span>
+  </footer>
+</body>
+</html>

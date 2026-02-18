@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Meet Chloe — Chloe Out Loud</title>
+  <link href="https://fonts.googleapis.com/css2?family=Ephesis&family=Lora:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet"/>
+
+  <style>
+    :root {
+      --cream:    #FFF5EB;
+      --warm-gray:#847E72;
+      --sage:     #52554E;
+      --navy:     #2E4558;
+      --midnight: #0C2A3C;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      background-color: var(--cream);
+      color: var(--sage);
+      font-family: 'Lora', Georgia, serif;
+      font-size: 18px;
+      line-height: 1.8;
+      overflow-x: hidden;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 18px 60px;
+      background: rgba(255, 245, 235, 0.92);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(132, 126, 114, 0.2);
+      white-space: nowrap;
+    }
+
+    .nav-logo {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      text-decoration: none;
+      line-height: 1;
+      gap: 1px;
+    }
+
+    .nav-logo-main {
+      font-family: Georgia, 'Times New Roman', serif;
+      font-size: 1.45rem;
+      font-weight: 900;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      color: var(--midnight);
+    }
+
+    .nav-logo-sub {
+      font-family: 'Ephesis', cursive;
+      font-size: 1rem;
+      color: var(--warm-gray);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 24px;
+      list-style: none;
+      flex-shrink: 0;
+    }
+
+    .nav-links a {
+      font-family: 'Lora', serif;
+      font-size: 0.72rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--warm-gray);
+      text-decoration: none;
+      transition: color 0.25s;
+      white-space: nowrap;
+    }
+
+    .nav-links a:hover,
+    .nav-links a.active { color: var(--midnight); }
+
+    /* ── PAGE HERO ── */
+    .page-hero {
+      padding-top: 100px;
+      background: var(--midnight);
+      color: var(--cream);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      min-height: 70vh;
+      align-items: center;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .page-hero-text {
+      padding: 80px 64px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .page-hero-eyebrow {
+      font-family: 'Ephesis', cursive;
+      font-size: 2.2rem;
+      color: rgba(255,245,235,0.5);
+      margin-bottom: -6px;
+      opacity: 0;
+      transform: translateY(16px);
+      animation: fadeUp 0.7s 0.1s forwards;
+    }
+
+    .page-hero-title {
+      font-family: Georgia, 'Times New Roman', serif;
+      font-size: clamp(4rem, 7vw, 8rem);
+      font-weight: 900;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      line-height: 1;
+      color: var(--cream);
+      margin-bottom: 28px;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeUp 0.8s 0.25s forwards;
+    }
+
+    .page-hero-subtitle {
+      font-family: Georgia, 'Times New Roman', serif;
+      font-size: 1.2rem;
+      font-style: italic;
+      color: rgba(255,245,235,0.65);
+      font-weight: 400;
+      opacity: 0;
+      transform: translateY(16px);
+      animation: fadeUp 0.8s 0.4s forwards;
+    }
+
+    .page-hero-image-wrap {
+      position: relative;
+      height: 70vh;
+      overflow: hidden;
+    }
+
+    .page-hero-image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: saturate(0.75) sepia(0.15);
+      opacity: 0.7;
+    }
+
+    /* ── INTRO SECTION ── */
+    .intro {
+      max-width: 780px;
+      margin: 0 auto;
+      padding: 80px 60px;
+    }
+
+    .intro-label {
+      font-family: 'Ephesis', cursive;
+      font-size: 2rem;
+      color: var(--warm-gray);
+      margin-bottom: -4px;
+    }
+
+    .intro-heading {
+      font-family: Georgia, 'Times New Roman', serif;
+      font-size: 2.2rem;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--midnight);
+      margin-bottom: 32px;
+      line-height: 1.1;
+    }
+
+    .intro p {
+      font-size: 1rem;
+      color: var(--sage);
+      line-height: 1.9;
+      margin-bottom: 24px;
+    }
+
+    .intro p:last-child { margin-bottom: 0; }
+
+    .intro-divider {
+      width: 56px;
+      height: 2px;
+      background: var(--warm-gray);
+      margin: 48px 0;
+    }
+
+    /* ── WHY SECTION ── */
+    .why-section {
+      background: var(--midnight);
+      color: var(--cream);
+      padding: 90px 60px;
+    }
+
+    .why-inner {
+      max-width: 780px;
+      margin: 0 auto;
+    }
+
+    .why-eyebrow {
+      font-family: 'Ephesis', cursive;
+      font-size: 2rem;
+      color: rgba(255,245,235,0.45);
+      margin-bottom: -4px;
+    }
+
+    .why-title {
+      font-family: Georgia, 'Times New Roman', serif;
+      font-size: 2.2rem;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--cream);
+      margin-bottom: 32px;
+    }
+
+    .why-section p {
+      font-size: 1rem;
+      color: rgba(255,245,235,0.8);
+      line-height: 1.9;
+      margin-bottom: 24px;
+    }
+
+    .reasons-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin-top: 40px;
+    }
+
+    .reason-card {
+      background: rgba(255,245,235,0.05);
+      border: 1px solid rgba(255,245,235,0.1);
+      padding: 28px 32px;
+      transition: background 0.25s;
+    }
+
+    .reason-card:hover { background: rgba(255,245,235,0.09); }
+
+    .reason-number {
+      font-family: Georgia, 'Times New Roman', serif;
+      font-size: 2rem;
+      font-weight: 900;
+      color: rgba(255,245,235,0.12);
+      line-height: 1;
+      margin-bottom: 10px;
+    }
+
+    .reason-text {
+      font-size: 0.95rem;
+      color: rgba(255,245,235,0.75);
+      line-height: 1.7;
+    }
+
+    /* ── EXPECTATIONS SECTION ── */
+    .expectations {
+      max-width: 780px;
+      margin: 0 auto;
+      padding: 80px 60px;
+    }
+
+    .expectations-label {
+      font-family: 'Ephesis', cursive;
+      font-size: 2rem;
+      color: var(--warm-gray);
+      margin-bottom: -4px;
+    }
+
+    .expectations-title {
+      font-family: Georgia, 'Times New Roman', serif;
+      font-size: 2.2rem;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--midnight);
+      margin-bottom: 32px;
+    }
+
+    .expect-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .expect-item {
+      display: grid;
+      grid-template-columns: 40px 1fr;
+      gap: 20px;
+      padding: 28px 0;
+      border-bottom: 1px solid rgba(132,126,114,0.22);
+      align-items: start;
+    }
+
+    .expect-item:first-child { border-top: 1px solid rgba(132,126,114,0.22); }
+
+    .expect-icon {
+      font-family: Georgia, 'Times New Roman', serif;
+      font-size: 1.4rem;
+      color: rgba(132,126,114,0.35);
+      font-style: italic;
+      padding-top: 2px;
+    }
+
+    .expect-title {
+      font-family: Georgia, 'Times New Roman', serif;
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--midnight);
+      margin-bottom: 6px;
+    }
+
+    .expect-desc {
+      font-size: 0.93rem;
+      color: var(--warm-gray);
+      line-height: 1.75;
+    }
+
+    /* ── CLOSING ── */
+    .closing {
+      background: var(--navy);
+      color: var(--cream);
+      padding: 90px 60px;
+      text-align: center;
+    }
+
+    .closing-inner {
+      max-width: 640px;
+      margin: 0 auto;
+    }
+
+    .closing-eyebrow {
+      font-family: 'Ephesis', cursive;
+      font-size: 2rem;
+      color: rgba(255,245,235,0.45);
+      margin-bottom: 4px;
+    }
+
+    .closing-title {
+      font-family: Georgia, 'Times New Roman', serif;
+      font-size: 2.6rem;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--cream);
+      margin-bottom: 24px;
+      line-height: 1.1;
+    }
+
+    .closing p {
+      font-size: 1rem;
+      color: rgba(255,245,235,0.75);
+      line-height: 1.9;
+      margin-bottom: 16px;
+    }
+
+    .closing-note {
+      margin-top: 40px;
+      padding: 24px 32px;
+      background: rgba(255,245,235,0.07);
+      border-left: 3px solid rgba(255,245,235,0.2);
+      text-align: left;
+      font-size: 0.88rem;
+      color: rgba(255,245,235,0.5);
+      font-style: italic;
+      line-height: 1.7;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--midnight);
+      border-top: 1px solid rgba(255,245,235,0.05);
+      padding: 30px 60px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .footer-logo {
+      font-family: Georgia, 'Times New Roman', serif;
+      font-size: 0.9rem;
+      font-weight: 900;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgba(255,245,235,0.3);
+      text-decoration: none;
+    }
+
+    .footer-script {
+      font-family: 'Ephesis', cursive;
+      font-size: 1rem;
+      color: rgba(255,245,235,0.18);
+    }
+
+    .footer-copy {
+      font-size: 0.7rem;
+      color: rgba(255,245,235,0.2);
+      letter-spacing: 0.08em;
+    }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      nav { padding: 14px 22px; }
+      .page-hero { grid-template-columns: 1fr; }
+      .page-hero-image-wrap { height: 50vw; order: -1; }
+      .page-hero-text { padding: 48px 24px; }
+      .intro, .expectations { padding: 52px 24px; }
+      .why-section { padding: 60px 24px; }
+      .reasons-grid { grid-template-columns: 1fr; }
+      .closing { padding: 60px 24px; }
+      footer { flex-direction: column; gap: 10px; text-align: center; padding: 24px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a href="blog.html" class="nav-logo">
+      <span class="nav-logo-main">Chloe Out Loud</span>
+      <span class="nav-logo-sub">a lifestyle blog</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="#">Fresh Ink</a></li>
+      <li><a href="meet-chloe.html" class="active">Meet Chloe</a></li>
+      <li><a href="#">Behind the Scenes</a></li>
+    </ul>
+  </nav>
+
+  <!-- PAGE HERO -->
+  <section class="page-hero">
+    <div class="page-hero-text">
+      <div class="page-hero-eyebrow">who is this chick anyway</div>
+      <h1 class="page-hero-title">Meet<br/>Chloe</h1>
+      <p class="page-hero-subtitle">Unfiltered. Unapologetic. Still learning.</p>
+    </div>
+    <div class="page-hero-image-wrap">
+      <!-- Replace with your own photo -->
+      <img class="page-hero-image" src="https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?w=900&q=80&auto=format&fit=crop" alt="Chloe" />
+    </div>
+  </section>
+
+  <!-- INTRO -->
+  <section class="intro">
+    <div class="intro-label">the basics</div>
+    <h2 class="intro-heading">Who Is This Chick?</h2>
+    <p>Hi! My name is Chloe Rudd and I am a 21 year-old BYU student. So, let's get all of the classic, generic, first-day of school questions out of the way. I am from Arizona, and have lived in Utah for the past 3 years. I'm a junior in the marketing program and I am passionate about building brands and strategy. Also, fun fact, I have an identical twin (sometimes I forget to tell people that and it takes them off guard).</p>
+    <p>I feel like it is also important to note that I am a member of The Church of Jesus Christ of Latter Days Saints. My beliefs and values will be evident in my writing, and you can expect to see an occasional post about religion. I don't love religious debate, so if you have come here to pull apart every single detail of my personal religious beliefs, it would probably be best that you leave. I'll respect your religious beliefs and point of views, so please do the same for me.</p>
+
+    <div class="intro-divider"></div>
+
+    <div class="intro-label">the why</div>
+    <h2 class="intro-heading">Why a Blog?</h2>
+    <p>The original idea actually came from a job posting. As I was applying for summer internships, one of them suggested providing a link to a blog page, portfolio, etc. At the time, I did not have a blog page, but it struck me. Why not? I enjoy writing and I have a lot of opinions. That's all you really need.</p>
+    <p>You're probably thinking to yourself, "Chloe, a blog is such an outdated form of communication, why on earth would you choose a blog to express your opinions?" To counter that I would say, "Where do you suggest I post them?" The first one that comes to mind for me is LinkedIn. So yes, I could oversaturate all of my connections with bits of writing that they genuinely do not care about, but I try to live by the golden rule. And let me tell you — if someone was flooding my LinkedIn feed with their thoughts, I am immediately removing that connection. Sorry, not sorry.</p>
+    <p>I would go on to say the same thing about my other forms of social media. If you have any other suggestions, I would love to hear them. Send them to me on LinkedIn, because I am not posting my email for the whole world — I already get enough spam as is.</p>
+  </section>
+
+  <!-- WHY I'M DOING THIS -->
+  <section class="why-section">
+    <div class="why-inner">
+      <div class="why-eyebrow">the real reasons</div>
+      <h2 class="why-title">Why I'm Actually Doing This</h2>
+      <p>In case you needed a more concrete list, here's exactly why this blog exists:</p>
+      <div class="reasons-grid">
+        <div class="reason-card">
+          <div class="reason-number">01</div>
+          <div class="reason-text">I enjoy writing and I have a lot of opinions.</div>
+        </div>
+        <div class="reason-card">
+          <div class="reason-number">02</div>
+          <div class="reason-text">I want to build my portfolio.</div>
+        </div>
+        <div class="reason-card">
+          <div class="reason-number">03</div>
+          <div class="reason-text">It will help differentiate me from others.</div>
+        </div>
+        <div class="reason-card">
+          <div class="reason-number">04</div>
+          <div class="reason-text">I love branding and this will help me develop my personal brand.</div>
+        </div>
+        <div class="reason-card">
+          <div class="reason-number">05</div>
+          <div class="reason-text">It's an excuse to research what I am passionate about.</div>
+        </div>
+        <div class="reason-card">
+          <div class="reason-number">06</div>
+          <div class="reason-text">I'll become a better writer and challenge myself in critical thinking.</div>
+        </div>
+        <div class="reason-card">
+          <div class="reason-number">07</div>
+          <div class="reason-text">It will help me practice holding myself accountable.</div>
+        </div>
+        <div class="reason-card">
+          <div class="reason-number">08</div>
+          <div class="reason-text">Stepping outside of my comfort zone — out loud.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHAT TO EXPECT -->
+  <section class="expectations">
+    <div class="expectations-label">a heads up</div>
+    <h2 class="expectations-title">What You Can't Expect</h2>
+    <div class="expect-list">
+      <div class="expect-item">
+        <div class="expect-icon">✗</div>
+        <div>
+          <div class="expect-title">A completely unbiased stance</div>
+          <div class="expect-desc">This is my blog, not an academic source. I wouldn't recommend citing me (not that you were going to).</div>
+        </div>
+      </div>
+      <div class="expect-item">
+        <div class="expect-icon">✗</div>
+        <div>
+          <div class="expect-title">The right answer</div>
+          <div class="expect-desc">While I love to tell people I am always right, I most definitely am not. If you disagree, that's ok — you can tell me, or be silently enraged while I live my life blissfully holding fast to my apparently wrong opinions.</div>
+        </div>
+      </div>
+      <div class="expect-item">
+        <div class="expect-icon">✗</div>
+        <div>
+          <div class="expect-title">Perfect grammar</div>
+          <div class="expect-desc">If you see something blatantly wrong, I'm sorry. I will do my best — but again, feel free to tell me.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CLOSING -->
+  <section class="closing">
+    <div class="closing-inner">
+      <div class="closing-eyebrow">in conclusion</div>
+      <h2 class="closing-title">Just Now,<br/>Out Loud.</h2>
+      <p>This blog is mostly for me. It will be written in my utterly unfiltered voice and express my unapologetically honest opinions. If you want to read it, I would love to hear your stance or feedback — but if not, I won't be offended.</p>
+      <p>Hopefully it will get better as time goes on, but honestly who knows. I am still learning.</p>
+      <div class="closing-note">
+        ✦ Side note: I am drafting this on Google Docs — even though I am typically a proud member of the Microsoft Suite love group. My main problem with Google Docs? My cursor always turns white and I can never find it. Someone please help me, I will be eternally grateful.
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <a href="blog.html" class="footer-logo">Chloe Out Loud</a>
+    <span class="footer-script">always honest, always loud</span>
+    <span class="footer-copy">© 2026 Chloe Rudd</span>
+  </footer>
+
+</body>
+</html>
